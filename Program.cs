@@ -4,6 +4,7 @@ using OpenQA.Selenium.Support.UI;
 using System;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using TicketBot.Model;
 
 namespace TicketBot
@@ -44,7 +45,7 @@ namespace TicketBot
             IWebElement AceptarTerminos =WaitUntilElementIsByVisible(driver,aceptarTerminos);
             Thread.Sleep(1000);
             AceptarTerminos.Click();
-            
+
             
             
         }
