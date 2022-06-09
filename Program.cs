@@ -15,7 +15,7 @@ namespace TicketBot
         {
             TimeSpan timeoutMain=TimeSpan.FromMinutes(5);
             TimeSpan timeoutTest = TimeSpan.FromSeconds(5);
-
+           
             TicketConfig test = new TicketConfig { StartRoute= "https://www.eticket.mx/masinformacion.aspx?idevento=29871", };
             TicketConfig main = new TicketConfig { StartRoute= "https://www.eticket.cr/eventos.aspx?idartista=835" };
             TicketConfig test2 = new TicketConfig();
@@ -35,7 +35,7 @@ namespace TicketBot
 
             IWebElement SumarBoletos = WaitUntilElementIsByVisible(driver, running.XPath_NumeroBoletos);
             SumarBoletos.Clear();
-            SumarBoletos.SendKeys("5");
+            SumarBoletos.SendKeys("10");
 
             IWebElement ExecuteCompra = WaitUntilElementIsByVisible(driver, running.EjecutarCompra);
             ExecuteCompra.Click();
@@ -43,10 +43,11 @@ namespace TicketBot
 
             string aceptarTerminos = "//*[@id=\"bAceptaTyc\"]";
             IWebElement AceptarTerminos =WaitUntilElementIsByVisible(driver,aceptarTerminos);
-            Thread.Sleep(1000);
+            Thread.Sleep(500);
             AceptarTerminos.Click();
-
-            
+            IWebElement confirmarComprar = WaitUntilElementIsByVisible(driver, running.ConfirmarCompra);
+            Thread.Sleep(1000);
+            confirmarComprar.Click();
             
         }
         public static IWebElement WaitUntilElementIsByVisible(IWebDriver driver,string ElementXPath) {
