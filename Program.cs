@@ -16,6 +16,9 @@ namespace TicketBot
         static string globalComprarYaRoute = "/html/body/form/div[3]/div[4]/div[1]/div/div[2]/a";
         static void Main(string[] args)
         {
+            while (DateTime.Now <= DateTime.Parse("06/16/2022 8:00pm")) { 
+            
+            }
             InstanceMultiplier(5);
             //Global_Basic_Execution(7577, 38966, 66258);//saprissa
             //Global_Basic_Execution(7309, 39226); //bad bunny
