@@ -2,69 +2,113 @@
 using OpenQA.Selenium.Edge;
 using OpenQA.Selenium.Support.UI;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using TicketBot.Model;
+using Action = TicketBot.Model.Action;
 
 namespace TicketBot
 {
     internal class Program
     {
+        static string globalComprarYaRoute = "/html/body/form/div[3]/div[4]/div[1]/div/div[2]/a";
         static void Main(string[] args)
         {
-            TimeSpan timeoutMain=TimeSpan.FromMinutes(5);
-            TimeSpan timeoutTest = TimeSpan.FromSeconds(5);
-           
-            TicketConfig test = new TicketConfig { StartRoute= "https://www.eticket.mx/masinformacion.aspx?idevento=29871", };
-            TicketConfig main = new TicketConfig { StartRoute= "https://www.eticket.cr/eventos.aspx?idartista=835" };
-            TicketConfig test2 = new TicketConfig();
-            TicketConfig running = test;
-            TimeSpan timeout = timeoutTest;
-
-            IWebDriver driver = new EdgeDriver("D:");
-            var waiter = new WebDriverWait(driver,timeout);
-
-
-
-            driver.Manage().Window.Maximize();
-            driver.Url = running.StartRoute;
-
-            IWebElement ComprarBoletos = WaitUntilElementIsByVisible(driver,running.XPath_Comprar_Boletos);
-            ComprarBoletos.Click();
-
-            IWebElement SumarBoletos = WaitUntilElementIsByVisible(driver, running.XPath_NumeroBoletos);
-            SumarBoletos.Clear();
-            SumarBoletos.SendKeys("10");
-
-            IWebElement ExecuteCompra = WaitUntilElementIsByVisible(driver, running.EjecutarCompra);
-            ExecuteCompra.Click();
-            //Thread.Sleep(TimeSpan.FromSeconds(2)); //deprecated
-
-            string aceptarTerminos = "//*[@id=\"bAceptaTyc\"]";
-            IWebElement AceptarTerminos =WaitUntilElementIsByVisible(driver,aceptarTerminos);
-            Thread.Sleep(500);
-            AceptarTerminos.Click();
-            IWebElement confirmarComprar = WaitUntilElementIsByVisible(driver, running.ConfirmarCompra);
-            Thread.Sleep(1000);
-            confirmarComprar.Click();
+            InstanceMultiplier(5);
+            //Global_Basic_Execution(7577, 38966, 66258);//saprissa
+            //Global_Basic_Execution(7309, 39226); //bad bunny
             
         }
-        public static IWebElement WaitUntilElementIsByVisible(IWebDriver driver,string ElementXPath) {
-            DateTime now = DateTime.Now;
-            now=now.AddMinutes(5);
-            while (DateTime.Now<now)
+        public static void InstanceMultiplier(int quantity) {
+            for (int i = 0; i < quantity; i++)
             {
-                try {
-                    IWebElement element=driver.FindElement(By.XPath(ElementXPath));
-                    return element;
-                }
-                catch { 
-                    //Thread.Sleep(TimeSpan.FromSeconds(2));
-                }
+                Thread temp=new Thread(()=> Global_Basic_Execution(7577, 38966, 66258));
+                temp.Start();
             }
-            return null;
         }
+        public static void BadBunny_EXEC_1()
+        {
+            int eventID= 7309;
+            int SectionID = 39226;
+            TicketConfig badBunny = new TicketConfig ();
+            List<Action> actions1=new List<Action> ();
+            Action Url = new Action { Type = "Url", Objective = "https://www.eticket.cr/masinformacion.aspx?idevento="+eventID };
+            Action ComprarBoletos = new Action { Type = "Click", Objective = globalComprarYaRoute };
+            actions1.Add (Url);
+            actions1.Add(ComprarBoletos);
+            badBunny.ExecuteAction(actions1);
+        }
+        public static void Global_Basic_Execution(int eventID,int SectionID) {
+            TicketConfig ticket = new TicketConfig();
+            Action Url = new Action { Type = "Url", Objective = "https://www.eticket.cr/masinformacion.aspx?idevento=" + eventID };
+            Action ComprarBoletos = new Action { Type = "Click", Objective = globalComprarYaRoute };
+            Action sectionBtn = new Action { Type = "Click", Objective = "//*[@data-sectionid='" + SectionID + "']" };
+            Action sendKeys = new Action { Type = "SendKeys", Value = "5", Objective = "//input[@class='spinbox SoloEnteros form-control']" };
+            Action confirmBtn = new Action { Type = "Click", Objective = "//*[@id=\"bContinuar\"]" };
+            Action wait = new Action { Type = "Wait", Value = "500" };
+            Action AceptarTerminos = new Action { Type = "Click", Objective = "//*[@id=\"bAceptaTyc\"]" };
+            List<Action> actions=new List<Action> ();
+            actions.Add(Url);
+            actions.Add (ComprarBoletos);
+            actions.Add(sectionBtn);
+            actions.Add(sendKeys);
+            actions.Add(confirmBtn);
+            actions.Add(wait);
+            actions.Add(AceptarTerminos);
+            ticket.ExecuteAction(actions);
+        }
+        public static void Global_Basic_Execution(int eventID, int SectionID, int blockID)
+        {
+            TicketConfig ticket = new TicketConfig();
+            Action Url = new Action { Type = "Url", Objective = "https://www.eticket.cr/masinformacion.aspx?idevento=" + eventID };
+            Action ComprarBoletos = new Action { Type = "Click", Objective = globalComprarYaRoute };
+            Action sectionBtn = new Action { Type = "Click", Objective = "//*[@data-sectionid='" + SectionID + "']" };
+            //OPT
+            Action block = new Action { Type = "Click", Objective = "//*[@data-blockid='"+blockID+"']" };
+            //
+            Action sendKeys = new Action { Type = "SendKeys", Value = "5", Objective = "//input[@class='spinbox SoloEnteros form-control']" };
+            Action confirmBtn = new Action { Type = "Click", Objective = "//*[@id=\"bContinuar\"]" };
+            Action wait = new Action { Type = "Wait", Value = "500" };
+            Action AceptarTerminos = new Action { Type = "Click", Objective = "//*[@id=\"bAceptaTyc\"]" };
+            List<Action> actions = new List<Action>();
+            actions.Add(Url);
+            actions.Add(ComprarBoletos);
+            actions.Add(sectionBtn);
+            actions.Add(block);
+            actions.Add(sendKeys);
+            actions.Add(confirmBtn);
+            actions.Add(wait);
+            actions.Add(AceptarTerminos);
+            ticket.ExecuteAction(actions);
+        }
+
+        public static List<Action> TestActions() {
+            List<Action> actions = new List<Action>();
+            Action url = new Action { Type = "Url", Objective = "https://www.eticket.mx/masinformacion.aspx?idevento=29871" };
+            Action comprarBoletosButton = new Action { Type = "Click", Objective = "//*[@id=\"frmGlobal\"]/div[3]/div[4]/div[1]/div/div[2]/a" };
+            Action TypeCantidadBoletos = new Action { Type = "SendKeys", Value = "10", Objective = "//*[@id=\"btnComprar805496\"]" };
+            Action ExecuteCompra = new Action { Type = "Click", Objective = "//*[@id=\"bContinuar\"]" };
+            Action wait = new Action { Type = "Wait", Value = "500" };
+            Action AceptarTerminos = new Action { Type = "Click", Objective = "//*[@id=\"bAceptaTyc\"]" };
+            Action continuarCompra = new Action { Type = "Click", Objective = "/html/body/form/div[3]/div[4]/div/div[3]/div/div[1]/div/div[2]/div[5]/div[2]/div[1]/button" };
+            actions.Add(url);
+            actions.Add(comprarBoletosButton);
+            actions.Add(TypeCantidadBoletos);
+            actions.Add(ExecuteCompra);
+            actions.Add(wait);
+            actions.Add(AceptarTerminos);
+            actions.Add(continuarCompra);
+            return actions;
+            
+        }
+        
+
+        
+            
+        
+        
         
     }
 }
