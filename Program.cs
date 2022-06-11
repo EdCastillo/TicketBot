@@ -18,10 +18,10 @@ namespace TicketBot
         {
             //Cosevi();
 
-            while (DateTime.Now <= DateTime.Parse("06/16/2022 8:00pm"))
-            {
+            //while (DateTime.Now <= DateTime.Parse("06/16/2022 8:00pm"))
+            //{
 
-            }
+            //}
             InstanceMultiplier(5);
             //Global_Basic_Execution(7577, 38966, 66258);//saprissa
             //Global_Basic_Execution(7309, 39226); //bad bunny
@@ -30,7 +30,8 @@ namespace TicketBot
         public static void InstanceMultiplier(int quantity) {
             for (int i = 0; i < quantity; i++)
             {
-                Thread temp = new Thread(() => Global_Basic_Execution(7577, 38966, 66258));
+                //Thread temp = new Thread(() => Global_Basic_Execution(7577, 38966, 66258));
+                Thread temp = new Thread(() => Global_Basic_Execution(7309, 39226));
                 temp.Start();
             }
         }

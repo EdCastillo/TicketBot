@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Edge;
 using System;
 using System.Collections.Generic;
@@ -12,13 +13,23 @@ namespace TicketBot.Model
     
     internal class TicketConfig
     {
-        public IWebDriver driver= new EdgeDriver("D:");
+        public IWebDriver driver = ProtectRequest();
         public List<Action> actions;
+        public static IWebDriver ProtectRequest() { 
+            Random random = new Random();
+            int result = random.Next(0, 2);
+            if (result == 0)
+            {
+                return new EdgeDriver("D:");
+            }
+            else {
+                return new ChromeDriver("D:");
+            }
+        }
         public void ExecuteAction() {
             foreach (var action in actions) {
                 ActionSwitch(action);
             }
-        
         }
         public void ExecuteAction(List<Action> actionList) {
             foreach (var action in actionList) {
