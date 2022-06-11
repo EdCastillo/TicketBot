@@ -54,7 +54,7 @@ namespace TicketBot.Model
         public IWebElement WaitAndGetElement(string Xpath)
         {
             DateTime now = DateTime.Now;
-            now = now.AddMinutes(5);
+            now = now.AddMinutes(10);
             while (DateTime.Now < now)
             {
                 try
