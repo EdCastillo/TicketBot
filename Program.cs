@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Edge;
+using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
@@ -18,10 +19,10 @@ namespace TicketBot
         {
             //Cosevi();
 
-            //while (DateTime.Now <= DateTime.Parse("06/16/2022 8:00pm"))
-            //{
+            while (DateTime.Now <= DateTime.Parse("06/16/2022 8:00pm"))
+            {
 
-            //}
+            }
             InstanceMultiplier(5);
             //Global_Basic_Execution(7577, 38966, 66258);//saprissa
             //Global_Basic_Execution(7309, 39226); //bad bunny
@@ -99,7 +100,10 @@ namespace TicketBot
             TicketConfig cosevi = new TicketConfig();
             cosevi.ExecuteAction(new Action { Type="Url",Objective= "https://servicios.educacionvial.go.cr/Formularios/MatriculaPruebaTeorica" });
             cosevi.ExecuteAction(new Action { Type="Click",Objective= "/html/body/div[3]/div[2]/div/div[2]/form/div[10]/label/input" });
-            cosevi.ExecuteAction(new Action {Type="Click",Objective= "/html/body/div[2]/div[3]/div[1]/div/div/span/div[1]" });
+            IWebElement captcha = cosevi.WaitAndGetElement("/html/body/div[2]/div[3]/div[1]/div/div/span/div[1]");
+            Actions action = new Actions(cosevi.driver);
+            action.MoveToElement(captcha).Perform();
+            //cosevi.ExecuteAction(new Action {Type="Click",Objective= "/html/body/div[2]/div[3]/div[1]/div/div/span/div[1]" });
 
         }
 
