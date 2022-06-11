@@ -15,7 +15,8 @@ namespace TicketBot.Model
     {
         public IWebDriver driver = ProtectRequest();
         public List<Action> actions;
-        public static IWebDriver ProtectRequest() { 
+        public static IWebDriver ProtectRequest() {
+            //return new EdgeDriver("C://");
             Random random = new Random();
             int result = random.Next(0, 2);
             if (result == 0)
@@ -38,6 +39,26 @@ namespace TicketBot.Model
         }
         public void ExecuteAction(Action action) {
             ActionSwitch(action);
+        }
+        public void URL_RefreshForElement(string url,string XPath)
+        {
+            while (true)
+            {
+                driver.Url = url;
+                Thread.Sleep(300);
+                try
+                {
+                    IWebElement element = driver.FindElement(By.XPath(XPath));
+                    Console.WriteLine("Found it");
+                    
+                    return;
+                }
+                catch
+                {
+                    Console.WriteLine("Refresh");
+                }
+            }
+            
         }
         public void ActionSwitch(Action action) {
             if (action.Type == "Click") {

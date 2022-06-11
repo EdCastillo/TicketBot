@@ -17,22 +17,22 @@ namespace TicketBot
         static string globalComprarYaRoute = "/html/body/form/div[3]/div[4]/div[1]/div/div[2]/a";
         static void Main(string[] args)
         {
-            //Cosevi();
-
-            while (DateTime.Now <= DateTime.Parse("06/16/2022 8:00pm"))
+            //TicketConfig testBB = new TicketConfig();
+            //testBB.URL_RefreshForElement(" https://www.eticket.cr/masinformacion.aspx?idevento=7309", "//a[@class=\"URLCOMPRA botoncompra\"]");
+            
+            while (DateTime.Now <= DateTime.Parse("06/16/2022 8:00am"))
             {
 
             }
             InstanceMultiplier(5);
             //Global_Basic_Execution(7577, 38966, 66258);//saprissa
             //Global_Basic_Execution(7309, 39226); //bad bunny
-
         }
         public static void InstanceMultiplier(int quantity) {
             for (int i = 0; i < quantity; i++)
             {
-                //Thread temp = new Thread(() => Global_Basic_Execution(7577, 38966, 66258));
-                Thread temp = new Thread(() => Global_Basic_Execution(7309, 39226));
+                Thread temp = new Thread(() => Global_Basic_Execution(7577, 38966, 66258));
+                //Thread temp = new Thread(() => Global_Basic_Execution(7309, 39226));
                 temp.Start();
             }
         }
@@ -50,7 +50,8 @@ namespace TicketBot
         }
         public static void Global_Basic_Execution(int eventID, int SectionID) {
             TicketConfig ticket = new TicketConfig();
-            Action Url = new Action { Type = "Url", Objective = "https://www.eticket.cr/masinformacion.aspx?idevento=" + eventID };
+            //Action Url = new Action { Type = "Url", Objective = "https://www.eticket.cr/masinformacion.aspx?idevento=" + eventID };
+            ticket.URL_RefreshForElement("https://www.eticket.cr/masinformacion.aspx?idevento=" + eventID, "//a[@class=\"URLCOMPRA botoncompra\"]");
             Action ComprarBoletos = new Action { Type = "Click", Objective = globalComprarYaRoute };
             Action sectionBtn = new Action { Type = "Click", Objective = "//*[@data-sectionid='" + SectionID + "']" };
             Action sendKeys = new Action { Type = "SendKeys", Value = "5", Objective = "//input[@class='spinbox SoloEnteros form-control']" };
@@ -58,7 +59,7 @@ namespace TicketBot
             Action wait = new Action { Type = "Wait", Value = "500" };
             Action AceptarTerminos = new Action { Type = "Click", Objective = "//*[@id=\"bAceptaTyc\"]" };
             List<Action> actions = new List<Action>();
-            actions.Add(Url);
+            //actions.Add(Url);
             actions.Add(ComprarBoletos);
             actions.Add(sectionBtn);
             actions.Add(sendKeys);
@@ -71,7 +72,8 @@ namespace TicketBot
         {
             TicketConfig ticket = new TicketConfig();
             //ticket.driver.Manage().Window.Minimize();
-            Action Url = new Action { Type = "Url", Objective = "https://www.eticket.cr/masinformacion.aspx?idevento=" + eventID };
+            //Action Url = new Action { Type = "Url", Objective = "https://www.eticket.cr/masinformacion.aspx?idevento=" + eventID };
+            ticket.URL_RefreshForElement("https://www.eticket.cr/masinformacion.aspx?idevento=" + eventID, "//a[@class=\"URLCOMPRA botoncompra\"]");
             Action ComprarBoletos = new Action { Type = "Click", Objective = globalComprarYaRoute };
             Action sectionBtn = new Action { Type = "Click", Objective = "//*[@data-sectionid='" + SectionID + "']" };
             //OPT
@@ -84,7 +86,7 @@ namespace TicketBot
             Action Confirm = new Action { Type = "Click", Objective = "//*[@class='goButton btn-wait']" };
             List<Action> actions = new List<Action>();
 
-            actions.Add(Url);
+            //actions.Add(Url);
             actions.Add(ComprarBoletos);
             actions.Add(sectionBtn);
             actions.Add(block);
