@@ -31,8 +31,8 @@ namespace TicketBot
         public static void InstanceMultiplier(int quantity) {
             for (int i = 0; i < quantity; i++)
             {
-                Thread temp = new Thread(() => Global_Basic_Execution(7577, 38966, 66258));
-                //Thread temp = new Thread(() => Global_Basic_Execution(7309, 39226));
+                //Thread temp = new Thread(() => Global_Basic_Execution(7577, 38966, 66258));
+                Thread temp = new Thread(() => Global_Basic_Execution(7309, 39226));
                 temp.Start();
             }
         }
