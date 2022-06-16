@@ -24,7 +24,7 @@ namespace TicketBot
             //testBB.URL_RefreshForElement(" https://www.eticket.cr/masinformacion.aspx?idevento=6965", "//a[@class=\"URLCOMPRA botoncompra\"]");
             //testBB.ExecuteAction(new Action { Type = "Click", Objective = globalComprarYaRoute });
             //testBB.ClickOnBestSectionAvailable();
-            InstanceMultiplier();
+            //InstanceMultiplier();
             //Global_Basic_Execution(7577, 38966, 66258);
 
             while (DateTime.Now <= DateTime.Parse("06/16/2022 10:00am"))
