@@ -53,6 +53,11 @@ namespace TicketBot
                         threads[i].Start();
                         dates[i] = DateTime.Now.AddMinutes(20);
                     }
+                    if (threads[i].IsAlive == false) {
+                        threads[i] = new Thread(() => Global_Basic_Execution(7309, 39226));
+                        threads[i].Start();
+                        dates[i] = DateTime.Now.AddMinutes(20);
+                    }
                 }
             }
         }
