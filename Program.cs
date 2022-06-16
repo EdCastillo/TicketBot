@@ -19,8 +19,9 @@ namespace TicketBot
         {
             //TicketConfig testBB = new TicketConfig();
             //testBB.URL_RefreshForElement(" https://www.eticket.cr/masinformacion.aspx?idevento=7309", "//a[@class=\"URLCOMPRA botoncompra\"]");
-            
-            while (DateTime.Now <= DateTime.Parse("06/16/2022 8:00am"))
+            //Global_Basic_Execution(7577, 38966, 66258);
+
+            while (DateTime.Now <= DateTime.Parse("06/16/2022 7:00am"))
             {
 
             }
@@ -48,10 +49,17 @@ namespace TicketBot
             actions1.Add(ComprarBoletos);
             badBunny.ExecuteAction(actions1);
         }
+        public static void Global_Intelli_Request_Execution(int eventID, int SectionID) {
+            TicketConfig ticket = new TicketConfig();
+            ticket.URL_RefreshForElement("https://www.eticket.cr/masinformacion.aspx?idevento=" + eventID, "//a[@class=\"URLCOMPRA botoncompra\"]");
+            Action ComprarBoletos = new Action { Type = "Click", Objective = globalComprarYaRoute };
+
+        }
         public static void Global_Basic_Execution(int eventID, int SectionID) {
             TicketConfig ticket = new TicketConfig();
             //Action Url = new Action { Type = "Url", Objective = "https://www.eticket.cr/masinformacion.aspx?idevento=" + eventID };
             ticket.URL_RefreshForElement("https://www.eticket.cr/masinformacion.aspx?idevento=" + eventID, "//a[@class=\"URLCOMPRA botoncompra\"]");
+            
             Action ComprarBoletos = new Action { Type = "Click", Objective = globalComprarYaRoute };
             Action sectionBtn = new Action { Type = "Click", Objective = "//*[@data-sectionid='" + SectionID + "']" };
             Action sendKeys = new Action { Type = "SendKeys", Value = "5", Objective = "//input[@class='spinbox SoloEnteros form-control']" };
