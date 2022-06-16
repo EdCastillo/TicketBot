@@ -42,8 +42,9 @@ namespace TicketBot.Model
             ActionSwitch(action);
         }
         public void ClickOnBestSectionAvailable() {
-            IList<IWebElement> all = driver.FindElements(By.CssSelector("div[class='seccion contenedor']"));
-            String[] allText = new string[all.Count];
+            IList<IWebElement> all = WaitForElementByCSSSelector("div[class='seccion contenedor']");
+            //IList<IWebElement> all = driver.FindElements(By.CssSelector("div[class='seccion contenedor']"));
+            
             string SectionId="";
             float precio = 0;
             string Nombre="";
@@ -52,7 +53,8 @@ namespace TicketBot.Model
                 //element.GetAttribute("data-sectionid");
                 try
                 {
-                    string text = element.FindElement(By.CssSelector("*[class='seccion precio']")).Text;
+                    string text = WaitForElementCssSelector(element,"*[class='seccion precio']").Text;
+                    //string text = element.FindElement(By.CssSelector("*[class='seccion precio']")).Text;
                     //text = text.Remove(0,1);
                     text = text.Replace('¢', '0');
                     text = text.Replace(',', '.');
@@ -93,6 +95,46 @@ namespace TicketBot.Model
                 }
             }
             
+        }
+        public IWebElement WaitForElementCssSelector(IWebElement element,string objective) {
+            DateTime now = DateTime.Now;
+            now = now.AddMinutes(10);
+            while (DateTime.Now < now)
+            {
+                try
+                {
+                    Console.WriteLine("Trying to request.");
+                    IWebElement elementO = element.FindElement(By.CssSelector(objective));
+                    return elementO;
+                }
+                catch
+                {
+                    //Thread.Sleep(TimeSpan.FromSeconds(2));
+                }
+            }
+            Thread.CurrentThread.Abort();
+            return null;
+        }
+        public IList<IWebElement> WaitForElementByCSSSelector(string objective)
+        {
+
+            DateTime now = DateTime.Now;
+            now = now.AddMinutes(10);
+            while (DateTime.Now < now)
+            {
+                try
+                {
+                    Console.WriteLine("Trying to request.");
+                    IList<IWebElement> element = driver.FindElements(By.CssSelector(objective));
+                    return element;
+                }
+                catch
+                {
+                    //Thread.Sleep(TimeSpan.FromSeconds(2));
+                }
+            }
+            Thread.CurrentThread.Abort();
+            return null;
         }
         public void ActionSwitch(Action action) {
             if (action.Type == "Click") {

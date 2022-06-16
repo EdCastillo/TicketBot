@@ -15,28 +15,45 @@ namespace TicketBot
     internal class Program
     {
         static string globalComprarYaRoute = "/html/body/form/div[3]/div[4]/div[1]/div/div[2]/a";
+        static int instances = 5;
+        static Thread[] threads = new Thread[instances];
+        static DateTime[] dates = new DateTime[instances];
         static void Main(string[] args)
         {
-            TicketConfig testBB = new TicketConfig();
-            testBB.URL_RefreshForElement(" https://www.eticket.cr/masinformacion.aspx?idevento=6965", "//a[@class=\"URLCOMPRA botoncompra\"]");
-            testBB.ExecuteAction(new Action { Type = "Click", Objective = globalComprarYaRoute });
-            testBB.ClickOnBestSectionAvailable();
+            //TicketConfig testBB = new TicketConfig();
+            //testBB.URL_RefreshForElement(" https://www.eticket.cr/masinformacion.aspx?idevento=6965", "//a[@class=\"URLCOMPRA botoncompra\"]");
+            //testBB.ExecuteAction(new Action { Type = "Click", Objective = globalComprarYaRoute });
+            //testBB.ClickOnBestSectionAvailable();
+            InstanceMultiplier();
             //Global_Basic_Execution(7577, 38966, 66258);
 
-            while (DateTime.Now <= DateTime.Parse("06/16/2022 9:55am"))
+            while (DateTime.Now <= DateTime.Parse("06/16/2022 10:00am"))
             {
 
             }
-            InstanceMultiplier(5);
+            InstanceMultiplier();
             //Global_Basic_Execution(7577, 38966, 66258);//saprissa
             //Global_Basic_Execution(7309, 39226); //bad bunny
         }
-        public static void InstanceMultiplier(int quantity) {
-            for (int i = 0; i < quantity; i++)
-            {
-                //Thread temp = new Thread(() => Global_Basic_Execution(7577, 38966, 66258));
-                Thread temp = new Thread(() => Global_Basic_Execution(7309, 39226));
-                temp.Start();
+        public static void InstanceMultiplier() {
+            for (int i = 0; i < 5; i++) {
+                if (threads[i] == null)
+                {
+                    threads[i] = new Thread(() => Global_Basic_Execution(7309, 39226));
+                    threads[i].Start();
+                    dates[i] = DateTime.Now.AddMinutes(20);
+                }
+                else {
+                    if (threads[i].IsAlive == true && dates[i] > DateTime.Now) {
+                        continue;
+                    }
+                    if (threads[i].IsAlive == true && dates[i] < DateTime.Now) { 
+                        threads[i].Abort();
+                        threads[i] = new Thread(() => Global_Basic_Execution(7309, 39226));
+                        threads[i].Start();
+                        dates[i] = DateTime.Now.AddMinutes(20);
+                    }
+                }
             }
         }
         public static void BadBunny_EXEC_1()
@@ -54,7 +71,11 @@ namespace TicketBot
         public static void Global_Intelli_Request_Execution(int eventID, int SectionID) {
             TicketConfig ticket = new TicketConfig();
             ticket.URL_RefreshForElement("https://www.eticket.cr/masinformacion.aspx?idevento=" + eventID, "//a[@class=\"URLCOMPRA botoncompra\"]");
-            Action ComprarBoletos = new Action { Type = "Click", Objective = globalComprarYaRoute };
+            ticket.ExecuteAction(new Action { Type = "Click", Objective = globalComprarYaRoute });
+            ticket.ClickOnBestSectionAvailable();
+            ticket.ExecuteAction(new Action { Type = "SendKeys", Value = "5", Objective = "//input[@class='spinbox SoloEnteros form-control']" });
+            ticket.ExecuteAction(new Action { Type = "Click", Objective = "//*[@id=\"bContinuar\"]" });
+
 
         }
         public static void Global_Basic_Execution(int eventID, int SectionID) {
