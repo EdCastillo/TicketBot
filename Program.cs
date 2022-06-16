@@ -17,11 +17,13 @@ namespace TicketBot
         static string globalComprarYaRoute = "/html/body/form/div[3]/div[4]/div[1]/div/div[2]/a";
         static void Main(string[] args)
         {
-            //TicketConfig testBB = new TicketConfig();
-            //testBB.URL_RefreshForElement(" https://www.eticket.cr/masinformacion.aspx?idevento=7309", "//a[@class=\"URLCOMPRA botoncompra\"]");
+            TicketConfig testBB = new TicketConfig();
+            testBB.URL_RefreshForElement(" https://www.eticket.cr/masinformacion.aspx?idevento=6965", "//a[@class=\"URLCOMPRA botoncompra\"]");
+            testBB.ExecuteAction(new Action { Type = "Click", Objective = globalComprarYaRoute });
+            testBB.ClickOnBestSectionAvailable();
             //Global_Basic_Execution(7577, 38966, 66258);
 
-            while (DateTime.Now <= DateTime.Parse("06/16/2022 7:00am"))
+            while (DateTime.Now <= DateTime.Parse("06/16/2022 9:55am"))
             {
 
             }

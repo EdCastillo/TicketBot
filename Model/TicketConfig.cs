@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using Newtonsoft.Json;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Edge;
 using System;
@@ -39,6 +40,39 @@ namespace TicketBot.Model
         }
         public void ExecuteAction(Action action) {
             ActionSwitch(action);
+        }
+        public void ClickOnBestSectionAvailable() {
+            IList<IWebElement> all = driver.FindElements(By.CssSelector("div[class='seccion contenedor']"));
+            String[] allText = new string[all.Count];
+            string SectionId="";
+            float precio = 0;
+            string Nombre="";
+            foreach (IWebElement element in all)
+            {
+                //element.GetAttribute("data-sectionid");
+                try
+                {
+                    string text = element.FindElement(By.CssSelector("*[class='seccion precio']")).Text;
+                    //text = text.Remove(0,1);
+                    text = text.Replace('¢', '0');
+                    text = text.Replace(',', '.');
+
+
+                    float precioE = float.Parse(text);
+                    if (precioE > precio)
+                    {
+                        precio = precioE;
+                        SectionId = element.GetAttribute("data-sectionid");
+                        Nombre = element.FindElement(By.CssSelector("*[class='seccion titulo']")).Text;
+                    }
+                }
+                catch {
+                    continue;
+                }
+            }
+            Console.Write(Nombre);
+            IWebElement bestSection = driver.FindElement(By.XPath("//*[@data-sectionid='" + SectionId + "']"));
+            bestSection.Click();
         }
         public void URL_RefreshForElement(string url,string XPath)
         {
